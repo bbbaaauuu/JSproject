@@ -1,0 +1,144 @@
+function setup() {
+  new Canvas ();
+
+  photon1 = new Sprite();
+  photon1.diameter = 25;
+  photon1.color = "white";
+  photon1.direction = 45;
+  photon1.speed = 5;
+  photon1.mass = 6;
+  photon1.pos = { x: 6, y: 15 };
+  photon1.textSize = 25;
+  photon1.text = "фотон";
+
+  core = new Sprite();
+  core.diameter = 50;
+  core.color = "red";
+  core.collider = "static";
+
+  e = new Group();
+  e.diameter = 20;
+  e.color = "orange";
+  e.speed = 5;
+  e.mass = 1;
+  e.bounciness = 1;
+  
+  e1 = new e.Sprite();
+  e1.pos = { x: windowWidth / 2, y: windowHeight / 2 - 114 };
+  
+  e2 = new e.Sprite();
+  e2.rotation = 180;
+  e2.pos = { x: windowWidth / 2, y: windowHeight / 2 + 114 };
+  
+  e3 = new Sprite();
+  e3.rotation = 90;
+  e3.diameter = 20;
+  e3.color = "yellow";
+  e3.pos = { x: windowWidth / 2 + 200, y: windowHeight / 2 };
+  e3.collider = "none";
+  squareSequence();
+  
+  e4 = new Sprite();
+  e4.rotation = 270;
+  e4.diameter = 20;
+  e4.color = "yellow";
+  e4.pos = { x: windowWidth / 2 - 200, y: windowHeight / 2 };
+  e4.collider = "none";
+  squareSequence();
+  
+  e5 = new Sprite();
+  e5.diameter = 20;
+  e5.color = "yellow";
+  e5.pos = { x: windowWidth / 2, y: windowHeight / 2 - 200 };
+  e5.collider = "none";
+  squareSequence();
+  
+  e6 = new Sprite();
+  e6.rotation = 180;
+  e6.diameter = 20;
+  e6.color = "yellow";
+  e6.pos = { x: windowWidth / 2, y: windowHeight / 2 + 200 };
+  e6.collider = "none";
+  squareSequence();
+
+  photon2 = new Sprite();
+  photon2.diameter = 25;
+  photon2.color = "blue";
+  photon2.visible = false;
+
+ async function squareSequence() {
+    while (e2.diameter == 20) {
+      await e1.move(2);
+      await e1.rotate(1);
+      await e2.move(2);
+      await e2.rotate(1);
+      await e3.move(5);
+      await e3.rotate(1);
+      await e4.move(5);
+      await e4.rotate(1);
+      await e5.move(5);
+      await e5.rotate(1);
+      await e6.move(5);
+      await e6.rotate(1);
+      break;
+    }
+
+    await e1.move(2);
+    await e1.rotate(1);
+    await e2.move(2);
+    await e2.rotate(1);
+    await e3.move(5);
+    await e3.rotate(1);
+    await e4.move(5);
+    await e4.rotate(1);
+    await e5.move(5);
+    await e5.rotate(1);
+    await e6.move(2);
+    await e6.rotate(1);
+    squareSequence();
+  }
+}
+
+function draw() {
+  clear();
+
+  if (photon1.collides(e2)) {
+    e2.diameter = 19;
+    e2.collider = "none";
+    e2.direction = 56;
+    e2.speed = 100;
+    
+    photon1.collider = "none";
+    photon1.visible = false;
+
+    e6.pos = { x: windowWidth / 2, y: windowHeight / 2 + 114 };
+    e6.rotation = 180;
+
+    e4.collider = "dynamic";
+
+    photon2.visible = true;
+    photon2.direction = -99;
+    photon2.speed = 2;
+    photon2.mass = 6;
+    photon2.pos = { x: windowWidth / 2 - 100, y: windowHeight / 2 + 100 };
+    photon2.textSize = 25;
+    photon2.text = "фотон 2";
+  }
+
+  if (photon2.collides(e4)) {
+    e4.direction = -70;
+    e4.speed = 16;
+    
+    photon2.collider = "none";
+    photon2.visible = false;
+
+    e4.color = 'violet';
+    e4.textSize = 25;
+    e4.text = "Оже";
+  }
+  noFill();
+  ellipse(width / 2, height / 2, 228);
+
+  noFill();
+  ellipse(width / 2, height / 2, 400);
+}
